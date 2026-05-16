@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import vaultBasimImg from './assets/vault-basim.png'
 
 function App() {
   const [booting, setBooting] = useState(true);
@@ -66,7 +67,7 @@ function App() {
               <h3>IT SUPPORT SPECIALIST</h3>
               
               <div className="avatar-frame">
-                <img src="/src/assets/vault-basim.png" alt="Vault Basim" className="vault-boy-img" />
+                <img src={vaultBasimImg} alt="Vault Basim" className="vault-boy-img" />
               </div>
               
               <p className="quote-text">
