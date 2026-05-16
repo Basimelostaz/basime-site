@@ -131,9 +131,9 @@ function App() {
             <h2>[ ENCRYPTED SIGNAL FREQUENCIES ]</h2>
             <p>TUNING INTO BROADCAST... CONTACT CHANNELS AVAILABLE:</p>
             <ul className="radio-list">
-              <li>📡 <a href="mailto:contact@basime.me" onClick={playClick} target="_blank" rel="noreferrer">EMAIL: CONTACT@BASIME.ME</a></li>
-              <li>🌐 <a href="https://linkedin.com" onClick={playClick} target="_blank" rel="noreferrer">LINKEDIN // SECURE_COMMS_01</a></li>
-              <li>💻 <a href="https://github.com" onClick={playClick} target="_blank" rel="noreferrer">GITHUB // SOURCE_VAULT</a></li>
+              <li>📡 <a href="mailto:basimelostaz@gmail.com" onClick={playClick} target="_blank" rel="noreferrer">EMAIL: basimelostaz@gmail.com</a></li>
+              <li>🌐 <a href="https://www.linkedin.com/in/basim-elostaz/" onClick={playClick} target="_blank" rel="noreferrer">LINKEDIN // SECURE_COMMS_01</a></li>
+              <li>💻 <a href="https://github.com/Basimelostaz" onClick={playClick} target="_blank" rel="noreferrer">GITHUB // SOURCE_VAULT</a></li>
             </ul>
             <div className="radio-chatter">
               <p className="dim-text">BACKGROUND NOISE: *AM METEOROLOGICAL DATA STATIC INTERMITTENT*</p>
