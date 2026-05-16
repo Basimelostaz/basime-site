@@ -46,6 +46,7 @@ function App() {
   return (
     <div className="pip-interface">
       <nav className="tabs">
+        <button onClick={() => handleTabChange("HOME")}>HOME</button>
         <button onClick={() => handleTabChange("STAT")}>STAT</button>
         <button onClick={() => handleTabChange("DATA")}>DATA</button>
         <button onClick={() => handleTabChange("INV")}>INV</button>
@@ -55,32 +56,49 @@ function App() {
       
       <main className="screen-content">
         {activeTab === "HOME" && (
-          <div>
-            <h1>BasimE.me</h1>
-            <p>Current Location: Sugar Land, TX</p>
-            <p>Status: IT Support Intern // Level 25</p>
-            <hr />
-            <p>&gt; Select a tab to begin navigation</p>
+          <div className="home-container">
+            <div className="profile-header">
+              <p>STATUS: ONLINE</p>
+              <p>SYSTEM: BASIM-OS v2.5</p>
+            </div>
+
+            <div className="avatar-display">
+              <h3>IT SUPPORT SPECIALIST</h3>
+              
+              <div className="avatar-frame">
+                <img src="/src/assets/vault-basim.png" alt="Vault Basim" className="vault-boy-img" />
+              </div>
+              
+              <p className="quote-text">
+                "SPECIALIZING IN SYSTEM DIAGNOSTICS, NETWORK ARCHITECTURE, AND BUILDING EXCEPTIONAL DIGITAL WASTELAND EXPERIENCES."
+              </p>
+              <h2 className="user-name">BASIM AHMED ELOSTAZ</h2>
+            </div>
+
+            <div className="home-footer">
+              <hr />
+              <p>&gt; SELECT A TAB TO BEGIN NAVIGATION</p>
+            </div>
           </div>
         )}
 
         {activeTab === "STAT" && (
           <div className="tab-content">
             <h2>[ S.P.E.C.I.A.L. ]</h2>
-            <p>STRENGTH: 8 (Boxing Trained)</p>
-            <p>PERCEPTION: 7 (IT Troubleshooting)</p>
-            <p>ENDURANCE: 6 (6'0" // 225 lbs)</p>
-            <p>LUCK: 9 (Fishing Bonus Active)</p>
+            <p>STRENGTH: 8 (BOXING TRAINED)</p>
+            <p>PERCEPTION: 7 (IT TROUBLESHOOTING)</p>
+            <p>ENDURANCE: 6 (6'0" // 225 LBS)</p>
+            <p>LUCK: 9 (FISHING BONUS ACTIVE)</p>
           </div>
         )}
 
         {activeTab === "DATA" && (
           <div className="tab-content">
             <h2>QUEST LOG</h2>
-            <p>[ ACTIVE ] IT Support Intern - Erickson Senior Living</p>
-            <p>[ COMPLETE ] CompTIA A+ Certification</p>
-            <p>[ COMPLETE ] Google IT Support Certificate</p>
-            <p>[ ONGOING ] IT Degree - University of Phoenix</p>
+            <p>[ ACTIVE ] IT SUPPORT INTERN - ERICKSON SENIOR LIVING</p>
+            <p>[ COMPLETE ] COMPTIA A+ CERTIFICATION</p>
+            <p>[ COMPLETE ] GOOGLE IT SUPPORT CERTIFICATE</p>
+            <p>[ ONGOING ] IT DEGREE - UNIVERSITY OF PHOENIX</p>
           </div>
         )}
 
@@ -131,7 +149,7 @@ function App() {
             <h2>[ ENCRYPTED SIGNAL FREQUENCIES ]</h2>
             <p>TUNING INTO BROADCAST... CONTACT CHANNELS AVAILABLE:</p>
             <ul className="radio-list">
-              <li>📡 <a href="mailto:basimelostaz@gmail.com" onClick={playClick} target="_blank" rel="noreferrer">EMAIL: basimelostaz@gmail.com</a></li>
+              <li>📡 <a href="mailto:basimelostaz@gmail.com" onClick={playClick} target="_blank" rel="noreferrer">EMAIL: BASIMELOSTAZ@GMAIL.COM</a></li>
               <li>🌐 <a href="https://www.linkedin.com/in/basim-elostaz/" onClick={playClick} target="_blank" rel="noreferrer">LINKEDIN // SECURE_COMMS_01</a></li>
               <li>💻 <a href="https://github.com/Basimelostaz" onClick={playClick} target="_blank" rel="noreferrer">GITHUB // SOURCE_VAULT</a></li>
             </ul>
