@@ -84,12 +84,67 @@ function App() {
         )}
 
         {activeTab === "STAT" && (
-          <div className="tab-content">
-            <h2>[ S.P.E.C.I.A.L. ]</h2>
-            <p>STRENGTH: 8 (BOXING TRAINED)</p>
-            <p>PERCEPTION: 7 (IT TROUBLESHOOTING)</p>
-            <p>ENDURANCE: 6 (6'0" // 225 LBS)</p>
-            <p>LUCK: 9 (FISHING BONUS ACTIVE)</p>
+          <div className="tab-content special-layout">
+            <h2>[ S.P.E.C.I.A.L. ATTRIBUTES ]</h2>
+            <div className="special-grid">
+              
+              <div className="stat-card">
+                <div className="stat-row">
+                  <span className="stat-name">STRENGTH</span>
+                  <span className="stat-value">8</span>
+                </div>
+                <p className="stat-desc">Heavy punching bag routines active. Equipped with boxing glove mastery (+5 Melee Modifier).</p>
+              </div>
+
+              <div className="stat-card">
+                <div className="stat-row">
+                  <span className="stat-name">PERCEPTION</span>
+                  <span className="stat-value">7</span>
+                </div>
+                <p className="stat-desc">Exceptional system log scanning and deep ticket troubleshooting instincts. Spotting network anomalies instantly.</p>
+              </div>
+
+              <div className="stat-card">
+                <div className="stat-row">
+                  <span className="stat-name">ENDURANCE</span>
+                  <span className="stat-value">6</span>
+                </div>
+                <p className="stat-desc">Frame build: 6'0" // 225 lbs. High stamina calibration via rope jumping and conditioning drills.</p>
+              </div>
+
+              <div className="stat-card">
+                <div className="stat-row">
+                  <span className="stat-name">CHARISMA</span>
+                  <span className="stat-value">7</span>
+                </div>
+                <p className="stat-desc">User-support tier empathy. Capable of translating complex network jargon into safe corporate-speak under fire.</p>
+              </div>
+
+              <div className="stat-card">
+                <div className="stat-row">
+                  <span className="stat-name">INTELLIGENCE</span>
+                  <span className="stat-value">9</span>
+                </div>
+                <p className="stat-desc">Dual-certified (CompTIA A+ & Google IT Support). High processing speeds fueled by active academic tracks.</p>
+              </div>
+
+              <div className="stat-card">
+                <div className="stat-row">
+                  <span className="stat-name">AGILITY</span>
+                  <span className="stat-value">8</span>
+                </div>
+                <p className="stat-desc">High precision rendering. Smooth execution loops while manipulating complex 3D low-poly meshes or refining fine pixel art frames.</p>
+              </div>
+
+              <div className="stat-card">
+                <div className="stat-row">
+                  <span className="stat-name">LUCK</span>
+                  <span className="stat-value">9</span>
+                </div>
+                <p className="stat-desc">Saltwater angling perk active. Grants a permanent critical multiplier bonus when near coastlines or piers.</p>
+              </div>
+
+            </div>
           </div>
         )}
 
