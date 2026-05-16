@@ -1,0 +1,128 @@
+.terminal-boot {
+  padding: 40px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background: var(--pip-green);
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.pip-interface {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid var(--pip-green);
+  padding: 10px 0;
+  background: rgba(31, 240, 66, 0.05);
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  color: var(--pip-green);
+  font-family: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 5px 15px;
+  transition: all 0.2s;
+}
+
+.tabs button:hover {
+  background: var(--pip-green);
+  color: black;
+}
+
+.screen-content {
+  padding: 40px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.tab-content h2 {
+  border-bottom: 1px solid var(--pip-green-dim);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Inventory Layout */
+.inv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 600px) {
+  .inv-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.inv-category h3 {
+  font-size: 1rem;
+  color: var(--pip-green);
+  border-bottom: 1px dashed var(--pip-green-dim);
+  padding-bottom: 5px;
+}
+
+.inv-category ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.inv-category li {
+  padding: 8px 0;
+  font-size: 0.95rem;
+}
+
+/* Map Display Style */
+.map-display {
+  border: 1px solid var(--pip-green-dim);
+  padding: 20px;
+  background: rgba(31, 240, 66, 0.02);
+  text-align: center;
+}
+
+.blink-text {
+  animation: blink 1.5s infinite;
+}
+
+/* Radio Connections */
+.radio-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.radio-list li {
+  margin: 15px 0;
+}
+
+.radio-list a {
+  color: var(--pip-green);
+  text-decoration: none;
+  border: 1px solid transparent;
+  padding: 5px;
+}
+
+.radio-list a:hover {
+  background: var(--pip-green);
+  color: black;
+}
+
+.dim-text {
+  color: var(--pip-green-dim);
+  font-size: 0.85rem;
+  margin-top: 30px;
+}
