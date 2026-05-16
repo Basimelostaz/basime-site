@@ -7,7 +7,7 @@ function App() {
   const [activeTab, setActiveTab] = useState("HOME");
   const [text, setText] = useState("");
   
-  const fullText = "INITIALIZING BASIM-OS v2.5...\nCHECKING SYSTEM INTEGRITY... OK\nLOADING PERSONAL DATA TERMINAL...\nWELCOME, BASIM AHMED ELOSTAZ.";
+  const fullText = "INITIALIZING BASIM-OS v2.5...\nCHECKING SYSTEM INTEGRITY... OK\nLOADING PERSONAL DATA TERMINAL...\nWELCOME, BASIM ELOSTAZ.";
 
   // Function to play the terminal button sound
   const playClick = () => {
@@ -73,7 +73,7 @@ function App() {
               <p className="quote-text">
                 "SPECIALIZING IN SYSTEM DIAGNOSTICS, NETWORK ARCHITECTURE, AND BUILDING EXCEPTIONAL DIGITAL WASTELAND EXPERIENCES."
               </p>
-              <h2 className="user-name">BASIM AHMED ELOSTAZ</h2>
+              <h2 className="user-name">BASIM ELOSTAZ</h2>
             </div>
 
             <div className="home-footer">
