@@ -91,9 +91,9 @@ function App() {
               <div className="stat-card">
                 <div className="stat-row">
                   <span className="stat-name">STRENGTH</span>
-                  <span className="stat-value">8</span>
+                  <span className="stat-value">7</span>
                 </div>
-                <p className="stat-desc">Heavy punching bag routines active. Equipped with boxing glove mastery (+5 Melee Modifier).</p>
+                <p className="stat-desc">Gym workout in progress. Muscle development underway.</p>
               </div>
 
               <div className="stat-card">
@@ -109,7 +109,7 @@ function App() {
                   <span className="stat-name">ENDURANCE</span>
                   <span className="stat-value">6</span>
                 </div>
-                <p className="stat-desc">Frame build: 6'0" // 225 lbs. High stamina calibration via rope jumping and conditioning drills.</p>
+                <p className="stat-desc">Frame build: 6'0" // 225 lbs. High stamina.</p>
               </div>
 
               <div className="stat-card">
@@ -154,7 +154,8 @@ function App() {
             <p>[ ACTIVE ] IT SUPPORT INTERN - ERICKSON SENIOR LIVING</p>
             <p>[ COMPLETE ] COMPTIA A+ CERTIFICATION</p>
             <p>[ COMPLETE ] GOOGLE IT SUPPORT CERTIFICATE</p>
-            <p>[ ONGOING ] IT DEGREE - UNIVERSITY OF PHOENIX</p>
+            <p>[ COMPLETE ] GOOGLE AI PROFESSIONAL CERTIFICATE</p>
+            <p>[ ONGOING ] BS DEGREE IN IT - UNIVERSITY OF PHOENIX</p>
           </div>
         )}
 
@@ -175,9 +176,9 @@ function App() {
                 <h3>QUEST ITEMS (PROJECTS & HOBBIES)</h3>
                 <ul>
                   <li>🐟 "CATCHUP" SOURCE CODE (SOCIAL FISHING GAME)</li>
-                  <li>🥊 BOXING GLOVES (EQUIPPED // +5 ENDURANCE)</li>
                   <li>🎣 SALTWATER PIER ROD (+10 LUCK NEAR COASTLINES)</li>
                   <li>🎲 GOLIATH CHARACTER SHEET (DND CAMPAIGN)</li>
+                  <li>👾 Gamer (Xbox & PC & Switch)</li>                  
                 </ul>
               </div>
             </div>
