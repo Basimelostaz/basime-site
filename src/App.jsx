@@ -138,7 +138,7 @@ function App() {
               <p className="quote-text">
                 "SPECIALIZING IN SYSTEM DIAGNOSTICS, NETWORK ARCHITECTURE, AND BUILDING EXCEPTIONAL DIGITAL WASTELAND EXPERIENCES."
               </p>
-              <h2 className="user-name">BASIM AHMED ELOSTAZ</h2>
+              <h2 className="user-name">BASIM ELOSTAZ</h2>
             </div>
 
             <div className="home-footer">
@@ -154,7 +154,7 @@ function App() {
             <div className="special-grid">
               <div className="stat-card">
                 <div className="stat-row"><span className="stat-name">STRENGTH</span><span className="stat-value">8</span></div>
-                <p className="stat-desc">Heavy punching bag routines active. Equipped with boxing glove mastery (+5 Melee Modifier).</p>
+                <p className="stat-desc">Gym workout starting. Building muscle and improving overall physical fitness.</p>
               </div>
               <div className="stat-card">
                 <div className="stat-row"><span className="stat-name">PERCEPTION</span><span className="stat-value">7</span></div>
@@ -193,6 +193,7 @@ function App() {
                   <p>[ ACTIVE ] IT SUPPORT INTERN - ERICKSON SENIOR LIVING</p>
                   <p>[ COMPLETE ] COMPTIA A+ CERTIFICATION</p>
                   <p>[ COMPLETE ] GOOGLE IT SUPPORT CERTIFICATE</p>
+                  <p>[ COMPLETE ] GOOGLE AI PROFESSIONAL CERTIFICATE</p>
                   <p>[ ONGOING ] IT DEGREE - UNIVERSITY OF PHOENIX</p>
                 </div>
                 <div className="executable-container">
@@ -270,6 +271,7 @@ function App() {
                   <li>🥊 BOXING GLOVES (EQUIPPED // +5 ENDURANCE)</li>
                   <li>🎣 SALTWATER PIER ROD (+10 LUCK NEAR COASTLINES)</li>
                   <li>🎲 GOLIATH CHARACTER SHEET (DND CAMPAIGN)</li>
+                  <li>👾 GAMING (Xbox & PC & Switch)</li>
                 </ul>
               </div>
             </div>
