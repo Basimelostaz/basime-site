@@ -233,3 +233,140 @@
   font-size: 0.85rem;
   margin-top: 30px;
 }
+
+/* Hacking Mini-Game Engine Panel */
+.dashed-hr {
+  border: none;
+  border-top: 2px dashed var(--pip-green-dim);
+  margin: 30px 0 15px 0;
+}
+
+.executable-container {
+  text-align: left;
+}
+
+.exec-btn {
+  background: transparent;
+  border: 1px solid var(--pip-green);
+  color: var(--pip-green);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.exec-btn:hover {
+  background: var(--pip-green);
+  color: black;
+  box-shadow: 0 0 10px var(--pip-green);
+}
+
+.hacking-game-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.attempts-indicator {
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.hacking-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+@media (min-width: 768px) {
+  .hacking-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.hex-word-column {
+  display: flex;
+  flex-direction: column;
+  background: rgba(31, 240, 66, 0.02);
+  border: 1px solid rgba(31, 240, 66, 0.2);
+  padding: 15px;
+}
+
+.word-guess-btn {
+  background: transparent;
+  border: none;
+  color: var(--pip-green);
+  font-family: inherit;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  padding: 4px 0;
+  letter-spacing: 1px;
+  width: fit-content;
+}
+
+.word-guess-btn:hover:not(:disabled) {
+  background: var(--pip-green);
+  color: black;
+}
+
+.word-guess-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.hacking-logs {
+  border: 1px solid var(--pip-green-dim);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hacking-logs h3 {
+  font-size: 1rem;
+  margin-top: 0;
+  border-bottom: 1px solid var(--pip-green-dim);
+  padding-bottom: 5px;
+}
+
+.log-scroll-box {
+  flex-grow: 1;
+  min-height: 180px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.log-line {
+  font-size: 0.9rem;
+  margin: 6px 0;
+  color: #a4fcae;
+  text-transform: uppercase;
+}
+
+.reset-btn {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.back-link-btn {
+  background: transparent;
+  border: none;
+  color: var(--pip-green-dim);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  width: fit-content;
+}
+
+.back-link-btn:hover {
+  color: var(--pip-green);
+  text-decoration: underline;
+}
