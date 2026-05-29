@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import vaultBasimImg from './assets/vault-basim.png'
 
-// Hacking Mini-game Configuration Data
+// Hacking Mini-game Configuration Data (7-letter words)
 const WORD_LIST = ["NETWORK", "ROUTING", "GATEWAY", "FIREWALL", "SUBSETS", "SYSLOGS", "COOKIES", "PACKETS", "CONSOLE", "DESKTOP"];
-const SECRET_PASSWORD = "FIREWALL"; // The winning target word
 
 function App() {
   const [booting, setBooting] = useState(true);
@@ -13,6 +12,7 @@ function App() {
   
   // Hacking Game State Logic
   const [inGame, setInGame] = useState(false);
+  const [secretPassword, setSecretPassword] = useState("");
   const [attempts, setAttempts] = useState(4);
   const [logs, setLogs] = useState(["ENTER AUTHORIZATION CREDENTIALS..."]);
   const [gameWon, setGameWon] = useState(false);
@@ -29,15 +29,27 @@ function App() {
   const handleTabChange = (tabName) => {
     playClick();
     setActiveTab(tabName);
-    // Automatically reset or close the game if navigating away
     if (tabName !== "DATA") setInGame(false);
   };
+
+  // Selects a completely random word from the roster matrix
+  const pickRandomPassword = () => {
+    const randomIndex = Math.floor(Math.random() * WORD_LIST.length);
+    setSecretPassword(WORD_LIST[randomIndex]);
+  };
+
+  // Initialize password target on mount
+  useEffect(() => {
+    pickRandomPassword();
+  }, []);
 
   // Algorithm to check matching character indexes
   const checkLikeness = (word) => {
     let likeness = 0;
-    for (let i = 0; i < word.length; i++) {
-      if (word[i] === SECRET_PASSWORD[i]) {
+    // Cap verification loop safely at 7 slots
+    const checkLength = Math.min(word.length, secretPassword.length);
+    for (let i = 0; i < checkLength; i++) {
+      if (word[i] === secretPassword[i]) {
         likeness++;
       }
     }
@@ -48,7 +60,7 @@ function App() {
     playClick();
     if (gameWon || gameLost) return;
 
-    if (word === SECRET_PASSWORD) {
+    if (word === secretPassword) {
       setGameWon(true);
       setLogs([...logs, `> ${word}`, "> ACCESS GRANTED. CREDENTIALS VERIFIED.", "> STATUS: LEVEL MAX DISCOVERED."]);
     } else {
@@ -60,13 +72,15 @@ function App() {
         setGameLost(true);
         setLogs([...logs, `> ${word}`, "> ACCESS DENIED. LOCKOUT INITIATED."]);
       } else {
-        setLogs([...logs, `> ${word}`, `> ERROR: LINK EXP_FACTOR: LIKENESS=${likeness}/${SECRET_PASSWORD.length}`]);
+        // Updated here to be cleanly evaluated out of 7 characters
+        setLogs([...logs, `> ${word}`, `> ERROR: LINK EXP_FACTOR: LIKENESS=${likeness}/7`]);
       }
     }
   };
 
   const resetHackingGame = () => {
     playClick();
+    pickRandomPassword(); // Forces a dynamic new key assignment upon restart
     setAttempts(4);
     setLogs(["ENTER AUTHORIZATION CREDENTIALS..."]);
     setGameWon(false);
