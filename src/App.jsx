@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import vaultBasimImg from './assets/vault-basim.png'
+import GorgTab from './GorgTab'
 
 // Hacking Mini-game Configuration Data (7-letter words)
 const WORD_LIST = ["NETWORK", "ROUTING", "GATEWAY", "FIREWALL", "SUBSETS", "SYSLOGS", "COOKIES", "PACKETS", "CONSOLE", "DESKTOP"];
@@ -112,12 +113,13 @@ function App() {
   return (
     <div className="pip-interface">
       <nav className="tabs">
-        <button onClick={() => handleTabChange("HOME")}>HOME</button>
-        <button onClick={() => handleTabChange("STAT")}>STAT</button>
-        <button onClick={() => handleTabChange("DATA")}>DATA</button>
-        <button onClick={() => handleTabChange("INV")}>INV</button>
-        <button onClick={() => handleTabChange("MAP")}>MAP</button>
-        <button onClick={() => handleTabChange("RADIO")}>RADIO</button>
+        <button className={activeTab === "HOME" ? "active" : ""} onClick={() => handleTabChange("HOME")}>HOME</button>
+        <button className={activeTab === "STAT" ? "active" : ""} onClick={() => handleTabChange("STAT")}>STAT</button>
+        <button className={activeTab === "DATA" ? "active" : ""} onClick={() => handleTabChange("DATA")}>DATA</button>
+        <button className={activeTab === "INV" ? "active" : ""} onClick={() => handleTabChange("INV")}>INV</button>
+        <button className={activeTab === "MAP" ? "active" : ""} onClick={() => handleTabChange("MAP")}>MAP</button>
+        <button className={activeTab === "RADIO" ? "active" : ""} onClick={() => handleTabChange("RADIO")}>RADIO</button>
+        <button className={activeTab === "GORG" ? "active" : ""} onClick={() => handleTabChange("GORG")}>☢️ GORG</button>
       </nav>
       
       <main className="screen-content">
@@ -308,6 +310,8 @@ function App() {
             </div>
           </div>
         )}
+
+        {activeTab === "GORG" && <GorgTab playClick={playClick} />}
       </main>
     </div>
   )
