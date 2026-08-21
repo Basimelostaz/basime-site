@@ -1,3 +1,70 @@
+/* Core Variables (Fallback) */
+:root {
+  --pip-green: #1ff042;
+  --pip-green-dim: rgba(31, 240, 66, 0.4);
+  --pip-bg-light: rgba(31, 240, 66, 0.05);
+  --pip-shadow: rgba(31, 240, 66, 0.7);
+  --pip-highlight: #a4fcae;
+}
+
+/* =========================================
+   PHOSPHOR THEME ENGINE
+========================================= */
+
+/* Default Green */
+body[data-theme="green"] {
+  --pip-green: #1ff042;
+  --pip-green-dim: rgba(31, 240, 66, 0.4);
+  --pip-bg-light: rgba(31, 240, 66, 0.05);
+  --pip-shadow: rgba(31, 240, 66, 0.7);
+  --pip-highlight: #a4fcae;
+  --pip-avatar-filter: none;
+}
+
+/* Mojave Amber */
+body[data-theme="amber"] {
+  --pip-green: #ffb642;
+  --pip-green-dim: rgba(255, 182, 66, 0.4);
+  --pip-bg-light: rgba(255, 182, 66, 0.05);
+  --pip-shadow: rgba(255, 182, 66, 0.7);
+  --pip-highlight: #ffe0a4;
+  --pip-avatar-filter: sepia(1) hue-rotate(350deg) saturate(3) brightness(1.2);
+}
+
+/* Institute Ice */
+body[data-theme="blue"] {
+  --pip-green: #2ab9ff;
+  --pip-green-dim: rgba(42, 185, 255, 0.4);
+  --pip-bg-light: rgba(42, 185, 255, 0.05);
+  --pip-shadow: rgba(42, 185, 255, 0.7);
+  --pip-highlight: #a4e6fc;
+  --pip-avatar-filter: sepia(1) hue-rotate(180deg) saturate(3) brightness(1.1);
+}
+
+/* Monochrome */
+body[data-theme="white"] {
+  --pip-green: #e0e0e0;
+  --pip-green-dim: rgba(224, 224, 224, 0.4);
+  --pip-bg-light: rgba(224, 224, 224, 0.05);
+  --pip-shadow: rgba(224, 224, 224, 0.7);
+  --pip-highlight: #ffffff;
+  --pip-avatar-filter: grayscale(1) brightness(1.5);
+}
+
+/* Global Theme Application */
+body { color: var(--pip-green); background: black; margin: 0; font-family: monospace; }
+.tabs { background: var(--pip-bg-light) !important; border-bottom: 2px solid var(--pip-green); }
+.map-display, .hex-word-column { background: var(--pip-bg-light) !important; border-color: var(--pip-green-dim) !important; }
+.ticket-row-btn:hover { background: var(--pip-bg-light) !important; border-left: 3px solid var(--pip-green); }
+.active-station { background: var(--pip-bg-light) !important; border-color: var(--pip-highlight) !important; }
+.vault-boy-img { filter: drop-shadow(0 0 12px var(--pip-shadow)) var(--pip-avatar-filter) !important; }
+.stat-desc, .log-line, .highlight-text, .freq-text { color: var(--pip-highlight) !important; }
+.terminal-boot { color: var(--pip-green); }
+
+/* =========================================
+   ORIGINAL APP.CSS STYLES
+========================================= */
+
 .terminal-boot {
   padding: 40px;
   font-size: 1.2rem;
@@ -24,9 +91,7 @@
 .tabs {
   display: flex;
   justify-content: space-around;
-  border-bottom: 2px solid var(--pip-green);
   padding: 10px 0;
-  background: rgba(31, 240, 66, 0.05);
 }
 
 .tabs button {
@@ -40,7 +105,7 @@
   transition: all 0.2s;
 }
 
-.tabs button:hover {
+.tabs button:hover, .tabs button.active {
   background: var(--pip-green);
   color: black;
 }
@@ -91,13 +156,11 @@
   max-width: 100%;
   max-height: 280px;
   object-fit: contain;
-  filter: drop-shadow(0 0 12px rgba(31, 240, 66, 0.7));
 }
 
 .quote-text {
   font-size: 0.9rem;
   line-height: 1.4;
-  color: var(--pip-green);
   margin: 12px 0;
   font-style: italic;
 }
@@ -144,10 +207,6 @@
   letter-spacing: 1px;
 }
 
-.stat-name {
-  color: var(--pip-green);
-}
-
 .stat-value {
   background: var(--pip-green-dim);
   color: black;
@@ -159,7 +218,6 @@
 .stat-desc {
   font-size: 0.85rem;
   line-height: 1.3;
-  color: #a4fcae;
   margin: 0;
   text-transform: uppercase;
 }
@@ -179,7 +237,6 @@
 
 .inv-category h3 {
   font-size: 1rem;
-  color: var(--pip-green);
   border-bottom: 1px dashed var(--pip-green-dim);
   padding-bottom: 5px;
 }
@@ -198,7 +255,6 @@
 .map-display {
   border: 1px solid var(--pip-green-dim);
   padding: 20px;
-  background: rgba(31, 240, 66, 0.02);
   text-align: center;
 }
 
@@ -206,7 +262,7 @@
   animation: blink 1.5s infinite;
 }
 
-/* Radio Connections */
+/* Radio Connections (Comms & List) */
 .radio-list {
   list-style-type: none;
   padding-left: 0;
@@ -234,7 +290,7 @@
   margin-top: 30px;
 }
 
-/* Hacking Mini-Game Engine Panel */
+/* Executable & Hacking */
 .dashed-hr {
   border: none;
   border-top: 2px dashed var(--pip-green-dim);
@@ -292,8 +348,6 @@
 .hex-word-column {
   display: flex;
   flex-direction: column;
-  background: rgba(31, 240, 66, 0.02);
-  border: 1px solid rgba(31, 240, 66, 0.2);
   padding: 15px;
 }
 
@@ -345,7 +399,6 @@
 .log-line {
   font-size: 0.9rem;
   margin: 6px 0;
-  color: #a4fcae;
   text-transform: uppercase;
 }
 
@@ -370,6 +423,11 @@
   color: var(--pip-green);
   text-decoration: underline;
 }
+
+/* =========================================
+   NEW ADDITIONS (ASCII, Tickets, Radio, Theme)
+========================================= */
+
 /* ASCII Art Boot Logo */
 .ascii-logo {
   margin-top: 20px;
@@ -405,13 +463,8 @@
   text-align: left;
   cursor: pointer;
   padding: 12px 5px;
-  border-bottom: 1px dashed rgba(31, 240, 66, 0.2);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
   transition: all 0.2s ease;
-}
-
-.ticket-row-btn:hover {
-  background: rgba(31, 240, 66, 0.1);
-  border-left: 3px solid var(--pip-green);
 }
 
 .col-id { width: 20%; }
@@ -452,9 +505,6 @@
   line-height: 1.5;
 }
 
-.highlight-text {
-  color: #a4fcae;
-}
 /* Pip-Boy Radio Player UI */
 .radio-grid {
   display: grid;
@@ -482,13 +532,12 @@
   padding: 15px;
   text-align: center;
   margin-bottom: 20px;
-  box-shadow: inset 0 0 10px rgba(31, 240, 66, 0.2);
+  box-shadow: inset 0 0 10px var(--pip-green-dim);
 }
 
 .freq-text {
   font-size: 2.5rem;
   margin: 5px 0;
-  color: #a4fcae;
   text-shadow: 0 0 8px var(--pip-green);
   letter-spacing: 2px;
 }
@@ -512,8 +561,40 @@
   padding: 10px 15px;
 }
 
-.active-station {
-  background: rgba(31, 240, 66, 0.2);
-  border-color: #a4fcae;
-  box-shadow: 0 0 8px rgba(31, 240, 66, 0.5);
+/* Theme Switcher Layout */
+.settings-section {
+  margin-top: 20px;
+}
+
+.theme-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  max-width: 400px;
+}
+
+.theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  font-weight: bold;
+}
+
+.theme-color-box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.bg-green { background: #1ff042; }
+.bg-amber { background: #ffb642; }
+.bg-blue { background: #2ab9ff; }
+.bg-white { background: #e0e0e0; }
+
+.active-theme {
+  border-left: 5px solid var(--pip-green);
+  box-shadow: 0 0 10px var(--pip-bg-light);
 }

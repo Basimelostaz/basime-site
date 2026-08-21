@@ -42,6 +42,9 @@ function App() {
   const [visibleLines, setVisibleLines] = useState([]);
   const [showAscii, setShowAscii] = useState(false);
   
+  // Theme State
+  const [theme, setTheme] = useState("green");
+
   // Ticketing System State
   const [selectedTicket, setSelectedTicket] = useState(null);
 
@@ -91,6 +94,11 @@ function App() {
     clickAudio.volume = 0.4;
     clickAudio.play().catch(err => console.log("Audio muted until interaction."));
   };
+
+  // Apply theme to the document body whenever it changes
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
 
   const handleTabChange = (tabName) => {
     playClick();
@@ -217,11 +225,11 @@ function App() {
         <button className={activeTab === "INV" ? "active" : ""} onClick={() => handleTabChange("INV")}>INV</button>
         <button className={activeTab === "MAP" ? "active" : ""} onClick={() => handleTabChange("MAP")}>MAP</button>
         <button className={activeTab === "RADIO" ? "active" : ""} onClick={() => handleTabChange("RADIO")}>RADIO</button>
+        <button className={activeTab === "SYS" ? "active" : ""} onClick={() => handleTabChange("SYS")}>SYS</button>
         <button className={activeTab === "GORG" ? "active" : ""} onClick={() => handleTabChange("GORG")}>☢️ GORG</button>
       </nav>
       
       <main className="screen-content">
-        {/* ... (HOME, STAT, TICKETS, DATA, INV, MAP TABS REMAIN EXACTLY THE SAME) ... */}
         {activeTab === "HOME" && (
           <div className="home-container">
             <div className="profile-header">
@@ -369,11 +377,9 @@ function App() {
           </div>
         )}
 
-        {/* --- NEW RADIO TAB INTERFACE --- */}
         {activeTab === "RADIO" && (
           <div className="tab-content radio-layout">
             <h2>[ COMM LINK & RADIO TUNER ]</h2>
-            
             <div className="radio-grid">
               <div className="comms-section">
                 <h3>&gt;&gt; SECURE COMMS</h3>
@@ -389,24 +395,16 @@ function App() {
 
               <div className="tuner-section">
                 <h3>&gt;&gt; PIP-BOY FM TUNER</h3>
-                
                 <div className="tuner-display">
                   <p className="dim-text">CURRENT FREQUENCY:</p>
                   <h4 className="freq-text">{currentStation ? currentStation.freq : "OFFLINE"}</h4>
                   <p className={`station-name ${isPlaying ? 'blink-text' : ''}`}>
-                    {currentStation && isPlaying 
-                      ? `▶ PLAYING: ${currentStation.name}` 
-                      : (currentStation ? `⏸ PAUSED: ${currentStation.name}` : "SELECT A STATION TO TUNE IN")}
+                    {currentStation && isPlaying ? `▶ PLAYING: ${currentStation.name}` : (currentStation ? `⏸ PAUSED: ${currentStation.name}` : "SELECT A STATION TO TUNE IN")}
                   </p>
                 </div>
-                
                 <div className="station-list">
                   {radioStations.map(station => (
-                    <button 
-                      key={station.id}
-                      className={`exec-btn station-btn ${currentStation?.id === station.id ? 'active-station' : ''}`}
-                      onClick={() => toggleRadio(station)}
-                    >
+                    <button key={station.id} className={`exec-btn station-btn ${currentStation?.id === station.id ? 'active-station' : ''}`} onClick={() => toggleRadio(station)}>
                       {currentStation?.id === station.id && isPlaying ? '⏸ STOP' : '▶ TUNE'} :: {station.freq}
                     </button>
                   ))}
@@ -416,9 +414,34 @@ function App() {
           </div>
         )}
 
+        {/* --- NEW THEME SWITCHER TAB --- */}
+        {activeTab === "SYS" && (
+          <div className="tab-content sys-layout">
+            <h2>[ SYSTEM PREFERENCES ]</h2>
+            <div className="settings-section">
+              <h3>&gt;&gt; PHOSPHOR DISPLAY THEME</h3>
+              <p className="dim-text">ADJUST EMITTER WAVELENGTH FOR OPTIMAL VIEWING:</p>
+              <div className="theme-grid">
+                <button className={`exec-btn theme-btn ${theme === 'green' ? 'active-theme' : ''}`} onClick={() => { playClick(); setTheme('green'); }}>
+                  <span className="theme-color-box bg-green"></span> ROBCO GREEN (DEFAULT)
+                </button>
+                <button className={`exec-btn theme-btn ${theme === 'amber' ? 'active-theme' : ''}`} onClick={() => { playClick(); setTheme('amber'); }}>
+                  <span className="theme-color-box bg-amber"></span> MOJAVE AMBER
+                </button>
+                <button className={`exec-btn theme-btn ${theme === 'blue' ? 'active-theme' : ''}`} onClick={() => { playClick(); setTheme('blue'); }}>
+                  <span className="theme-color-box bg-blue"></span> INSTITUTE ICE
+                </button>
+                <button className={`exec-btn theme-btn ${theme === 'white' ? 'active-theme' : ''}`} onClick={() => { playClick(); setTheme('white'); }}>
+                  <span className="theme-color-box bg-white"></span> MONOCHROME
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab === "GORG" && <GorgTab playClick={playClick} />}
         
-        {/* Hidden Audio Element - Kept outside the tab logic so music persists across tabs! */}
+        {/* Hidden Audio Element */}
         <audio ref={audioRef} src={currentStation?.src} loop />
       </main>
     </div>
