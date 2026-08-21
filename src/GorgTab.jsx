@@ -1,181 +1,138 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 export default function GorgTab() {
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [videoUrl, setVideoUrl] = useState(null);
-  const [chatLog, setChatLog] = useState([
+  const [messages, setMessages] = useState([
     { sender: 'GORG', text: 'WHAT DO YOU WANT, PUNY HUMAN? SPEAK BEFORE I SMASH THIS TERMINAL!' }
   ]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [renderMode, setRenderMode] = useState('gif'); // 'gif' or 'video'
+  const [videoUrl, setVideoUrl] = useState(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  
+  const audioRef = useRef(null);
 
-  const handleSubmit = async (e) => {
+  const handleTransmit = async (e) => {
     e.preventDefault();
     if (!input.trim() || loading) return;
 
-    const userMessage = input;
+    const userText = input;
     setInput('');
-    setChatLog((prev) => [...prev, { sender: 'HUMAN', text: userMessage }]);
+    setMessages(prev => [...prev, { sender: 'HUMAN', text: userText }]);
     setLoading(true);
 
     try {
-      const response = await fetch('https://gorg-backend.onrender.com/api/ask-gorg', {
+      const res = await fetch('https://gorg-backend.onrender.com/api/ask-gorg', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage }),
+        body: JSON.stringify({ message: userText, mode: renderMode })
       });
 
-      if (!response.ok) throw new Error('Terminal uplink failed.');
+      if (!res.ok) throw new Error('Uplink failed');
 
-      const data = await response.json();
-      setChatLog((prev) => [...prev, { sender: 'GORG', text: data.reply }]);
-      setVideoUrl(data.video_url);
+      const data = await res.json();
+      setMessages(prev => [...prev, { sender: 'GORG', text: data.reply }]);
+
+      if (data.mode === 'video') {
+        setVideoUrl(data.video_url);
+      } else if (data.mode === 'gif' && data.audio_url) {
+        setVideoUrl(null);
+        setIsSpeaking(true);
+        if (audioRef.current) {
+          audioRef.current.src = data.audio_url;
+          audioRef.current.play();
+          audioRef.current.onended = () => setIsSpeaking(false);
+        }
+      }
     } catch (err) {
-      setChatLog((prev) => [
-        ...prev,
-        { sender: 'SYSTEM', text: `ERROR: ${err.message}` },
-      ]);
+      setMessages(prev => [...prev, { sender: 'SYSTEM', text: 'ERROR: Terminal uplink failed.' }]);
+      setIsSpeaking(false);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h3 style={{ margin: 0, color: '#39ff14' }}>☢️ ROBCO INDUSTRIES GORG-OS ☢️</h3>
-        <p style={{ margin: '4px 0 0 0', fontSize: '12px', color: '#00cc44' }}>
-          TACTICAL SUPER MUTANT DIRECT DIALOGUE LINK
-        </p>
-      </div>
+    <div style={{ padding: '16px', color: '#00ff66', fontFamily: 'monospace' }}>
+      {/* Hidden audio element for GIF mode playback */}
+      <audio ref={audioRef} style={{ display: 'none' }} />
 
-      <div style={styles.screen}>
-        {videoUrl && (
-          <div style={styles.videoContainer}>
-            <video key={videoUrl} controls autoPlay style={styles.video}>
-              <source src={videoUrl} type="video/mp4" />
-            </video>
-          </div>
+      {/* Visual Display Container */}
+      <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+        {videoUrl ? (
+          <video
+            src={videoUrl}
+            autoPlay
+            controls
+            style={{ width: '280px', height: '280px', border: '2px solid #00ff66', objectFit: 'cover' }}
+          />
+        ) : (
+          <img
+            src={isSpeaking ? '/gorg_talking.gif' : '/super_mutant.png'}
+            alt="Gorg"
+            style={{ width: '280px', height: '280px', border: '2px solid #00ff66', objectFit: 'cover' }}
+          />
         )}
-
-        <div style={styles.log}>
-          {chatLog.map((msg, i) => (
-            <div key={i} style={styles.message}>
-              <strong style={{ color: msg.sender === 'GORG' ? '#39ff14' : msg.sender === 'HUMAN' ? '#00ff66' : '#ff4444' }}>
-                [{msg.sender}]:
-              </strong>{' '}
-              <span style={{ color: '#c8ffc8' }}>{msg.text}</span>
-            </div>
-          ))}
-          {loading && (
-            <div style={styles.loading}>
-              * TRANSMITTING TO WASTELAND... MODULATING MUTANT VOCALS... *
-            </div>
-          )}
-        </div>
       </div>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <span style={styles.prompt}>&gt;</span>
+      {/* Mode Selector Toggle */}
+      <div style={{ marginBottom: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <span>VISUAL FEED:</span>
+        <button
+          type="button"
+          onClick={() => setRenderMode('gif')}
+          style={{
+            background: renderMode === 'gif' ? '#00ff66' : 'transparent',
+            color: renderMode === 'gif' ? '#000' : '#00ff66',
+            border: '1px solid #00ff66',
+            cursor: 'pointer',
+            padding: '4px 8px'
+          }}
+        >
+          FAST (GIF)
+        </button>
+        <button
+          type="button"
+          onClick={() => setRenderMode('video')}
+          style={{
+            background: renderMode === 'video' ? '#00ff66' : 'transparent',
+            color: renderMode === 'video' ? '#000' : '#00ff66',
+            border: '1px solid #00ff66',
+            cursor: 'pointer',
+            padding: '4px 8px'
+          }}
+        >
+          AI VIDEO (HQ)
+        </button>
+      </div>
+
+      {/* Terminal Log */}
+      <div style={{ height: '180px', overflowY: 'auto', border: '1px solid #00ff66', padding: '8px', marginBottom: '12px' }}>
+        {messages.map((m, i) => (
+          <div key={i} style={{ marginBottom: '6px' }}>
+            <strong>[{m.sender}]:</strong> {m.text}
+          </div>
+        ))}
+        {loading && <div>[SYSTEM]: {renderMode === 'video' ? 'GENERATING VIDEO FEED...' : 'TRANSMITTING VOICE...'}</div>}
+      </div>
+
+      {/* Input Form */}
+      <form onSubmit={handleTransmit} style={{ display: 'flex', gap: '8px' }}>
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message to Gorg..."
-          style={styles.input}
-          disabled={loading}
-          autoFocus
+          placeholder="Speak to Gorg..."
+          style={{ flex: 1, background: '#000', color: '#00ff66', border: '1px solid #00ff66', padding: '6px' }}
         />
-        <button type="submit" style={styles.button} disabled={loading}>
-          {loading ? 'WAIT' : 'TRANSMIT'}
+        <button
+          type="submit"
+          disabled={loading}
+          style={{ background: '#00ff66', color: '#000', border: 'none', padding: '6px 16px', fontWeight: 'bold', cursor: 'pointer' }}
+        >
+          TRANSMIT
         </button>
       </form>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    backgroundColor: '#050c05',
-    color: '#39ff14',
-    fontFamily: '"Courier New", Courier, monospace',
-    padding: '16px',
-    borderRadius: '6px',
-    border: '1px solid #39ff14',
-    boxShadow: '0 0 12px rgba(57, 255, 20, 0.15)',
-    maxWidth: '800px',
-    margin: '10px auto',
-  },
-  header: {
-    textAlign: 'center',
-    marginBottom: '12px',
-    borderBottom: '1px solid #1c521c',
-    paddingBottom: '8px',
-  },
-  screen: {
-    minHeight: '220px',
-    maxHeight: '400px',
-    overflowY: 'auto',
-    marginBottom: '12px',
-    paddingRight: '6px',
-  },
-  videoContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginBottom: '12px',
-  },
-  video: {
-    maxWidth: '100%',
-    maxHeight: '220px',
-    borderRadius: '4px',
-    border: '1px solid #39ff14',
-  },
-  log: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-  },
-  message: {
-    fontSize: '14px',
-    lineHeight: '1.4',
-  },
-  loading: {
-    color: '#80ff80',
-    fontStyle: 'italic',
-    fontSize: '13px',
-    marginTop: '6px',
-  },
-  form: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    borderTop: '1px solid #1c521c',
-    paddingTop: '12px',
-  },
-  prompt: {
-    fontSize: '16px',
-    fontWeight: 'bold',
-    color: '#39ff14',
-  },
-  input: {
-    flex: 1,
-    backgroundColor: '#020602',
-    color: '#39ff14',
-    border: '1px solid #1c521c',
-    borderRadius: '3px',
-    padding: '8px 12px',
-    fontFamily: 'inherit',
-    fontSize: '14px',
-    outline: 'none',
-  },
-  button: {
-    backgroundColor: '#0d2b0d',
-    color: '#39ff14',
-    border: '1px solid #39ff14',
-    borderRadius: '3px',
-    padding: '8px 16px',
-    cursor: 'pointer',
-    fontFamily: 'inherit',
-    fontSize: '13px',
-    fontWeight: 'bold',
-  },
-};
