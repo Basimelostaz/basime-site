@@ -6,11 +6,40 @@ import GorgTab from './GorgTab'
 // Hacking Mini-game Configuration Data (7-letter words)
 const WORD_LIST = ["NETWORK", "ROUTING", "GATEWAY", "FIREWALL", "SUBSETS", "SYSLOGS", "COOKIES", "PACKETS", "CONSOLE", "DESKTOP"];
 
+// BIOS Boot Sequence Data
+const bootMessages = [
+  "BIOS Date 08/21/26 12:08:24 Ver 1.00",
+  "CPU: RobCo Integrated Processor @ 3.80GHz",
+  "Memory Test: 32768K OK",
+  "Initializing USB Controllers... Done.",
+  "Mounting virtual file systems...",
+  "Loading user profile: Basim...",
+  "Decrypting terminal protocols... OK.",
+  "Starting interactive shell..."
+];
+
+const asciiArt = `
+ ____           _              ___  ____  
+| __ )  __ _ __(_)_ __ ___    / _ \\/ ___| 
+|  _ \\ / _\` / __| | '_ \` _ \\ | | | \\___ \\ 
+| |_) | (_| \\__ \\ | | | | | || |_| |___) |
+|____/ \\__,_|___/_|_| |_| |_| \\___/|____/ 
+                              
+WELCOME TO THE WASTELAND, BASIM AHMED ELOSTAZ.
+`;
+
 function App() {
+  // Boot & Navigation State
   const [booting, setBooting] = useState(true);
   const [activeTab, setActiveTab] = useState("HOME");
-  const [text, setText] = useState("");
   
+  // New Boot Sequence State
+  const [visibleLines, setVisibleLines] = useState([]);
+  const [showAscii, setShowAscii] = useState(false);
+  
+  // Ticketing System State
+  const [selectedTicket, setSelectedTicket] = useState(null);
+
   // Hacking Game State Logic
   const [inGame, setInGame] = useState(false);
   const [secretPassword, setSecretPassword] = useState("");
@@ -19,7 +48,33 @@ function App() {
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
 
-  const fullText = "INITIALIZING BASIM-OS v2.5...\nCHECKING SYSTEM INTEGRITY... OK\nLOADING PERSONAL DATA TERMINAL...\nWELCOME, BASIM ELOSTAZ.";
+  // Helpdesk Experience Data
+  const ticketData = [
+    {
+      id: "TKT-3192",
+      status: "RESOLVED",
+      client: "ERICKSON SENIOR LIVING",
+      title: "END-USER HARDWARE & NETWORK FAILURE",
+      desc: "Users reporting system crashes, unresponsive peripherals, and intermittent network drops across multiple workstations.",
+      resolution: "Ran hardware diagnostics and replaced faulty RAM modules. Updated network interface drivers and reconfigured local routing protocols. Provided empathetic desk-side support to ensure end-users were comfortable with the restored setups."
+    },
+    {
+      id: "TKT-4401",
+      status: "CLOSED",
+      client: "INTERNAL IT (COMPTIA A+ / GOOGLE IT)",
+      title: "SECURITY AUDIT & COMPLIANCE SCAN",
+      desc: "Routine vulnerability scan required to verify system integrity and firewall rule configurations.",
+      resolution: "Executed full malware sweep, verified secure access protocols, and restricted elevated privileges. All systems optimized and operating within acceptable security parameters."
+    },
+    {
+      id: "TKT-8899",
+      status: "IN PROGRESS",
+      client: "BASIM-OS INIT",
+      title: "DEVELOP CUSTOM TERMINAL OS",
+      desc: "Need a centralized web interface to deploy personal projects, React builds, and Node.js environments.",
+      resolution: "Constructing dynamic React-based terminal interface. Implementing hacking mini-games, custom CSS scanlines, and seamless routing."
+    }
+  ];
 
   const playClick = () => {
     const audio = new Audio('/click.mp3');
@@ -30,24 +85,22 @@ function App() {
   const handleTabChange = (tabName) => {
     playClick();
     setActiveTab(tabName);
+    // Reset internal tab states when navigating away
     if (tabName !== "DATA") setInGame(false);
+    if (tabName !== "TICKETS") setSelectedTicket(null);
   };
 
-  // Selects a completely random word from the roster matrix
   const pickRandomPassword = () => {
     const randomIndex = Math.floor(Math.random() * WORD_LIST.length);
     setSecretPassword(WORD_LIST[randomIndex]);
   };
 
-  // Initialize password target on mount
   useEffect(() => {
     pickRandomPassword();
   }, []);
 
-  // Algorithm to check matching character indexes
   const checkLikeness = (word) => {
     let likeness = 0;
-    // Cap verification loop safely at 7 slots
     const checkLength = Math.min(word.length, secretPassword.length);
     for (let i = 0; i < checkLength; i++) {
       if (word[i] === secretPassword[i]) {
@@ -73,7 +126,6 @@ function App() {
         setGameLost(true);
         setLogs([...logs, `> ${word}`, "> ACCESS DENIED. LOCKOUT INITIATED."]);
       } else {
-        // Updated here to be cleanly evaluated out of 7 characters
         setLogs([...logs, `> ${word}`, `> ERROR: LINK EXP_FACTOR: LIKENESS=${likeness}/7`]);
       }
     }
@@ -81,30 +133,52 @@ function App() {
 
   const resetHackingGame = () => {
     playClick();
-    pickRandomPassword(); // Forces a dynamic new key assignment upon restart
+    pickRandomPassword();
     setAttempts(4);
     setLogs(["ENTER AUTHORIZATION CREDENTIALS..."]);
     setGameWon(false);
     setGameLost(false);
   };
 
+  // Boot Sequence Animation
   useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      setText(fullText.slice(0, i));
-      i++;
-      if (i > fullText.length) {
-        clearInterval(interval);
-        setTimeout(() => setBooting(false), 1000); 
+    let currentIndex = 0;
+    
+    const intervalId = setInterval(() => {
+      if (currentIndex < bootMessages.length) {
+        setVisibleLines(prev => [...prev, bootMessages[currentIndex]]);
+        currentIndex++;
+      } else {
+        clearInterval(intervalId);
+        
+        setTimeout(() => {
+          setShowAscii(true);
+          
+          setTimeout(() => {
+            setBooting(false);
+          }, 2500); 
+          
+        }, 400);
       }
-    }, 40);
-    return () => clearInterval(interval);
+    }, 250); 
+
+    return () => clearInterval(intervalId);
   }, []);
 
   if (booting) {
     return (
       <div className="terminal-boot">
-        <pre>{text}</pre>
+        <div style={{ textAlign: "left" }}>
+          {visibleLines.map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}
+          
+          {showAscii && (
+            <pre className="ascii-logo">
+              {asciiArt}
+            </pre>
+          )}
+        </div>
         <div className="cursor"></div>
       </div>
     );
@@ -115,6 +189,7 @@ function App() {
       <nav className="tabs">
         <button className={activeTab === "HOME" ? "active" : ""} onClick={() => handleTabChange("HOME")}>HOME</button>
         <button className={activeTab === "STAT" ? "active" : ""} onClick={() => handleTabChange("STAT")}>STAT</button>
+        <button className={activeTab === "TICKETS" ? "active" : ""} onClick={() => handleTabChange("TICKETS")}>TICKETS</button>
         <button className={activeTab === "DATA" ? "active" : ""} onClick={() => handleTabChange("DATA")}>DATA</button>
         <button className={activeTab === "INV" ? "active" : ""} onClick={() => handleTabChange("INV")}>INV</button>
         <button className={activeTab === "MAP" ? "active" : ""} onClick={() => handleTabChange("MAP")}>MAP</button>
@@ -186,6 +261,67 @@ function App() {
           </div>
         )}
 
+        {activeTab === "TICKETS" && (
+          <div className="tab-content ticketing-layout">
+            <h2>[ ROBCO HELPDESK : ACTIVE TICKETS ]</h2>
+            
+            {!selectedTicket ? (
+              <div className="ticket-list">
+                <div className="ticket-header">
+                  <span className="col-id">ID</span>
+                  <span className="col-status">STATUS</span>
+                  <span className="col-title">SUBJECT</span>
+                </div>
+                
+                {ticketData.map((tkt) => (
+                  <button 
+                    key={tkt.id} 
+                    className="ticket-row-btn" 
+                    onClick={() => { playClick(); setSelectedTicket(tkt); }}
+                  >
+                    <span className="col-id">{tkt.id}</span>
+                    <span className={`col-status ${tkt.status === 'RESOLVED' || tkt.status === 'CLOSED' ? 'status-green' : 'status-yellow'}`}>
+                      [{tkt.status}]
+                    </span>
+                    <span className="col-title">{tkt.title}</span>
+                  </button>
+                ))}
+
+                <div className="executable-container" style={{ marginTop: '40px' }}>
+                  <hr className="dashed-hr" />
+                  <p className="dim-text">ENCOUNTERING AN ERROR? CONTACT THE ADMIN.</p>
+                  <button className="exec-btn" onClick={() => { playClick(); window.location.href = "mailto:basimelostaz@gmail.com"; }}>
+                    + SUBMIT NEW TICKET
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="ticket-detail">
+                <div className="ticket-detail-header">
+                  <h3>LOG: {selectedTicket.id}</h3>
+                  <button className="back-link-btn" onClick={() => { playClick(); setSelectedTicket(null); }}>
+                    &lt; RETURN TO QUEUE
+                  </button>
+                </div>
+                
+                <div className="ticket-body">
+                  <p><strong>CLIENT:</strong> {selectedTicket.client}</p>
+                  <p><strong>STATUS:</strong> <span className={selectedTicket.status === 'IN PROGRESS' ? 'text-yellow' : ''}>{selectedTicket.status}</span></p>
+                  <hr className="dashed-hr" />
+                  
+                  <p className="tkt-label dim-text">USER DESCRIPTION:</p>
+                  <p className="tkt-text">{selectedTicket.desc}</p>
+                  
+                  <br />
+                  
+                  <p className="tkt-label dim-text">ADMIN RESOLUTION:</p>
+                  <p className="tkt-text highlight-text">&gt; {selectedTicket.resolution}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {activeTab === "DATA" && (
           <div className="tab-content">
             {!inGame ? (
@@ -196,7 +332,7 @@ function App() {
                   <p>[ COMPLETE ] COMPTIA A+ CERTIFICATION</p>
                   <p>[ COMPLETE ] GOOGLE IT SUPPORT CERTIFICATE</p>
                   <p>[ COMPLETE ] GOOGLE AI PROFESSIONAL CERTIFICATE</p>
-                  <p>[ COMPLETE ] IT DEGREE - UNIVERSITY OF PHOENIX</p>
+                  <p>[ ONGOING ] IT DEGREE - UNIVERSITY OF PHOENIX</p>
                 </div>
                 <div className="executable-container">
                   <hr className="dashed-hr" />
@@ -216,7 +352,7 @@ function App() {
                 <div className="hacking-grid">
                   <div className="hex-word-column">
                     <p className="dim-text">0xF42C  _#$%^!!*</p>
-                    <p className="dim-text">0xF438  []=--+_\</p>
+                    <p className="dim-text">0xF438  []=--+_\\</p>
                     {WORD_LIST.map((word, idx) => (
                       <button 
                         key={idx} 

@@ -370,3 +370,88 @@
   color: var(--pip-green);
   text-decoration: underline;
 }
+/* ASCII Art Boot Logo */
+.ascii-logo {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  animation: blink 2s infinite; 
+  text-shadow: 0 0 5px var(--pip-green);
+}
+
+/* Helpdesk Ticketing System */
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-header {
+  display: flex;
+  font-weight: bold;
+  color: var(--pip-green-dim);
+  border-bottom: 2px solid var(--pip-green-dim);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.ticket-row-btn {
+  display: flex;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--pip-green);
+  font-family: inherit;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  padding: 12px 5px;
+  border-bottom: 1px dashed rgba(31, 240, 66, 0.2);
+  transition: all 0.2s ease;
+}
+
+.ticket-row-btn:hover {
+  background: rgba(31, 240, 66, 0.1);
+  border-left: 3px solid var(--pip-green);
+}
+
+.col-id { width: 20%; }
+.col-status { width: 25%; }
+.col-title { width: 55%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.status-green { color: var(--pip-green); }
+.status-yellow { color: #fca4a4; }
+.text-yellow { color: #fca4a4; }
+
+.ticket-detail {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--pip-green-dim);
+  padding: 20px;
+}
+
+.ticket-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--pip-green-dim);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.ticket-detail-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.tkt-label {
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.tkt-text {
+  margin-top: 0;
+  line-height: 1.5;
+}
+
+.highlight-text {
+  color: #a4fcae;
+}
