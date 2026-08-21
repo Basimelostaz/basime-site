@@ -19,7 +19,7 @@ function App() {
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
 
-  const fullText = "INITIALIZING BASIM-OS v2.5...\nCHECKING SYSTEM INTEGRITY... OK\nLOADING PERSONAL DATA TERMINAL...\nWELCOME, BASIM AHMED ELOSTAZ.";
+  const fullText = "INITIALIZING BASIM-OS v2.5...\nCHECKING SYSTEM INTEGRITY... OK\nLOADING PERSONAL DATA TERMINAL...\nWELCOME, BASIM ELOSTAZ.";
 
   const playClick = () => {
     const audio = new Audio('/click.mp3');
@@ -196,7 +196,7 @@ function App() {
                   <p>[ COMPLETE ] COMPTIA A+ CERTIFICATION</p>
                   <p>[ COMPLETE ] GOOGLE IT SUPPORT CERTIFICATE</p>
                   <p>[ COMPLETE ] GOOGLE AI PROFESSIONAL CERTIFICATE</p>
-                  <p>[ ONGOING ] IT DEGREE - UNIVERSITY OF PHOENIX</p>
+                  <p>[ COMPLETE ] IT DEGREE - UNIVERSITY OF PHOENIX</p>
                 </div>
                 <div className="executable-container">
                   <hr className="dashed-hr" />
