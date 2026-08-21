@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function GorgTab() {
   const [messages, setMessages] = useState([
@@ -6,11 +6,17 @@ export default function GorgTab() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [renderMode, setRenderMode] = useState('gif'); // 'gif' or 'video'
+  const [renderMode, setRenderMode] = useState('gif');
   const [videoUrl, setVideoUrl] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   
   const audioRef = useRef(null);
+
+  // Preload GIF in memory on initial component mount
+  useEffect(() => {
+    const img = new Image();
+    img.src = '/gorg_talking.gif';
+  }, []);
 
   const handleTransmit = async (e) => {
     e.preventDefault();
@@ -40,7 +46,7 @@ export default function GorgTab() {
         setIsSpeaking(true);
         if (audioRef.current) {
           audioRef.current.src = data.audio_url;
-          audioRef.current.play();
+          audioRef.current.play().catch(e => console.error("Playback error:", e));
           audioRef.current.onended = () => setIsSpeaking(false);
         }
       }
@@ -54,10 +60,9 @@ export default function GorgTab() {
 
   return (
     <div style={{ padding: '16px', color: '#00ff66', fontFamily: 'monospace' }}>
-      {/* Hidden audio element for GIF mode playback */}
       <audio ref={audioRef} style={{ display: 'none' }} />
 
-      {/* Visual Display Container */}
+      {/* Visual Display Container with Instant CSS Toggling */}
       <div style={{ textAlign: 'center', marginBottom: '16px' }}>
         {videoUrl ? (
           <video
@@ -67,17 +72,34 @@ export default function GorgTab() {
             style={{ width: '280px', height: '280px', border: '2px solid #00ff66', objectFit: 'cover' }}
           />
         ) : (
-          <img
-            src={isSpeaking ? '/gorg_talking.gif' : '/super_mutant.png'}
-            alt="Gorg"
-            style={{ width: '280px', height: '280px', border: '2px solid #00ff66', objectFit: 'cover' }}
-          />
+          <div style={{ width: '280px', height: '280px', margin: '0 auto', border: '2px solid #00ff66', position: 'relative' }}>
+            <img
+              src="/super_mutant.png"
+              alt="Gorg Idle"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: isSpeaking ? 'none' : 'block'
+              }}
+            />
+            <img
+              src="/gorg_talking.gif"
+              alt="Gorg Talking"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: isSpeaking ? 'block' : 'none'
+              }}
+            />
+          </div>
         )}
       </div>
 
       {/* Mode Selector Toggle */}
       <div style={{ marginBottom: '12px', display: 'flex', gap: '8px', alignItems: 'center' }}>
-        <span>VISUAL FEED:</span>
+        <span>FEED:</span>
         <button
           type="button"
           onClick={() => setRenderMode('gif')}
@@ -89,7 +111,7 @@ export default function GorgTab() {
             padding: '4px 8px'
           }}
         >
-          FAST (GIF)
+          ⚡ FAST (GIF)
         </button>
         <button
           type="button"
@@ -102,7 +124,7 @@ export default function GorgTab() {
             padding: '4px 8px'
           }}
         >
-          AI VIDEO (HQ)
+          🎬 AI VIDEO (HQ)
         </button>
       </div>
 
